@@ -1,6 +1,8 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from django_filters.rest_framework import DjangoFilterBackend
 
 from . import serializers
+from .service import ArticleFilter
 from .models import Article, ArticleCategory
 
 
@@ -9,6 +11,8 @@ class ArticleListView(ListAPIView):
 
     queryset = Article.objects.all()
     serializer_class = serializers.ArticleListSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ArticleFilter
 
 
 class ArticleDetailView(RetrieveAPIView):
