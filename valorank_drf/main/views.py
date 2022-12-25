@@ -18,7 +18,7 @@ class HomeProductListView(APIView):
 
 
 class HomeArticleListView(APIView):
-    """Вывод товаров с главной страницы"""
+    """Вывод статей с главной страницы"""
 
     @staticmethod
     def get(request):
