@@ -15,6 +15,8 @@ class HomeProductListSerializer(serializers.ModelSerializer):
 class HomeArticleListSerializer(serializers.ModelSerializer):
     """Список товаров с главной страницы"""
 
+    category = serializers.SlugRelatedField(slug_field='title', read_only=True)
+
     class Meta:
         model = Article
         fields = ('pk', 'title', 'category', 'image')
