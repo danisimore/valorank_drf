@@ -28,4 +28,4 @@ class ArticleCategoryListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ArticleCategory
-        fields = ('id', 'title')
+        fields = '__all__'

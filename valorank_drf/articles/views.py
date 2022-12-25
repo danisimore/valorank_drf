@@ -1,35 +1,25 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 
-from .serializers import ArticleListSerializer, ArticleDetailSerializer, ArticleCategoryListSerializer
+from . import serializers
 from .models import Article, ArticleCategory
 
 
-class ArticleListView(APIView):
+class ArticleListView(ListAPIView):
     """Вывод всех статей"""
 
-    @staticmethod
-    def get(request):
-        articles = Article.objects.all()
-        serializer = ArticleListSerializer(articles, many=True)
-        return Response(serializer.data)
+    queryset = Article.objects.all()
+    serializer_class = serializers.ArticleListSerializer
 
 
-class ArticleDetailView(APIView):
+class ArticleDetailView(RetrieveAPIView):
     """Вывод определенной статьи"""
 
-    @staticmethod
-    def get(request, pk):
-        article = Article.objects.get(id=pk)
-        serializer = ArticleDetailSerializer(article)
-        return Response(serializer.data)
+    queryset = Article.objects.all()
+    serializer_class = serializers.ArticleDetailSerializer
 
 
-class ArticleCategoryListView(APIView):
+class ArticleCategoryListView(ListAPIView):
     """Вывод категорий"""
 
-    @staticmethod
-    def get(request):
-        category = ArticleCategory.objects.all()
-        serializer = ArticleCategoryListSerializer(category, many=True)
-        return Response(serializer.data)
+    queryset = ArticleCategory.objects.all()
+    serializer_class = serializers.ArticleCategoryListSerializer

@@ -1,25 +1,18 @@
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 
 from . import models
 from . import serializers
 
 
-class ProductListView(APIView):
+class ProductListView(ListAPIView):
     """Вывод всех товаров"""
 
-    @staticmethod
-    def get(request):
-        products = models.Product.objects.all()
-        serializer = serializers.ProductListSerializer(products, many=True)
-        return Response(serializer.data)
+    queryset = models.Product.objects.all()
+    serializer_class = serializers.ProductListSerializer
 
 
-class ProductDetailView(APIView):
+class ProductDetailView(RetrieveAPIView):
     """Вывод определенного товара"""
 
-    @staticmethod
-    def get(request, pk):
-        product = models.Product.objects.get(id=pk)
-        serializer = serializers.ProductDetailSerializer(product)
-        return Response(serializer.data)
+    queryset = models.Product.objects.all()
+    serializer_class = serializers.ProductDetailSerializer
