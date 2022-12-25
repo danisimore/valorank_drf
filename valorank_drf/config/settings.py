@@ -52,6 +52,7 @@ LOCAL_APPS = [
     'users',
     'store',
     'articles',
+    'support_service',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY + LOCAL_APPS
