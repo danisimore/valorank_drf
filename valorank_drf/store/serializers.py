@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
-from . import models
+from .models import Product
 
 
 class ProductListSerializer(serializers.ModelSerializer):
     """Список всех товаров"""
 
     class Meta:
-        model = models.Product
+        model = Product
         fields = ('id', 'title', 'image', 'old_price', 'current_price', 'execution_time')
 
 
@@ -18,5 +18,5 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     desired_rank = serializers.SlugRelatedField(slug_field='title', read_only=True)
 
     class Meta:
-        model = models.Product
+        model = Product
         fields = '__all__'
