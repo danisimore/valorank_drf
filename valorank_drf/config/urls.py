@@ -23,6 +23,10 @@ from config import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+
+    path('api/v1/home/', include('main.urls')),
+    path('api/v1/store/', include('store.urls'))
 ]
 
 if settings.DEBUG:
