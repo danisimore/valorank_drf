@@ -45,7 +45,8 @@ DJANGO_APPS = [
 THIRD_PARTY = [
     'rest_framework',
     'ckeditor',
-    'ckeditor_uploader'
+    'ckeditor_uploader',
+    'django_filters'
 ]
 
 LOCAL_APPS = [
@@ -146,3 +147,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CKEDITOR_UPLOAD_PATH = 'media/ckeditor/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+}
