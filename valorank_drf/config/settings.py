@@ -46,7 +46,9 @@ THIRD_PARTY = [
     'rest_framework',
     'ckeditor',
     'ckeditor_uploader',
-    'django_filters'
+    'django_filters',
+    'djoser',
+    'rest_framework.authtoken'
 ]
 
 LOCAL_APPS = [

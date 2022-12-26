@@ -24,11 +24,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
 
     path('api/v1/home/', include('main.urls')),
     path('api/v1/store/', include('store.urls')),
     path('api/v1/articles/', include('articles.urls')),
-    path('api/v1/support_service/', include('support_service.urls'))
+    path('api/v1/support_service/', include('support_service.urls')),
+    path('api/v1/users/', include('users.urls')),
 ]
 
 if settings.DEBUG:
