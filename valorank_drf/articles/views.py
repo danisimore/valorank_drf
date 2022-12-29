@@ -1,5 +1,6 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, DestroyAPIView
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import permissions
 
 from . import serializers
 from .service import ArticleFilter
@@ -20,6 +21,12 @@ class ArticleDetailView(RetrieveAPIView):
 
     queryset = Article.objects.all()
     serializer_class = serializers.ArticleDetailSerializer
+
+
+class ArticleDestroyView(DestroyAPIView):
+    """Удаление статьи"""
+    queryset = Article.objects.all()
+    permission_classes = [permissions.IsAdminUser]
 
 
 class ArticleCategoryListView(ListAPIView):
