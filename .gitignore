@@ -219,3 +219,4 @@ ENV/
 /valorank_drf/.env.dev.db
 /valorank_drf/.env.prod
 /valorank_drf/.env.prod.db
+/valorank_drf/.env.emailcfg
