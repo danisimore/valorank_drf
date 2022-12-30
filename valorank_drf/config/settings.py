@@ -15,7 +15,8 @@ from pathlib import Path
 import dotenv
 
 dotenv.load_dotenv('.env.dev.db')
-dotenv.load_dotenv('.env.emailcfg')
+dotenv.load_dotenv('.env.email.cfg')
+dotenv.load_dotenv('.env.dev')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j3vtl)k+e3s*ad80l_$f%=%_ut5c**axt225pl9jdh!cpg$k68'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
