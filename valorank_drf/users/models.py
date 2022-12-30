@@ -74,7 +74,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     username_validator = UnicodeUsernameValidator()
 
     email = models.EmailField(__(''), unique=True)
-    email_verify = models.BooleanField(default=False)
     temporary_email = models.EmailField(__('Временная почта'), blank=True, null=True)
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
