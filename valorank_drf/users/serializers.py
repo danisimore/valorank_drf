@@ -52,7 +52,7 @@ class TokenObtainSerializer(RestTokenObtainSerializer):
                 'no_confirmed_email',
             )
         elif not api_settings.USER_AUTHENTICATION_RULE(self.user):
-            # Если пользователя с введенным email нет в БД, вызываем исключение
+            # Если пользователя с введенным email или паролем нет в БД, вызываем исключение
             raise exceptions.AuthenticationFailed(
                 self.error_messages['no_active_account'],
                 'no_active_account',
