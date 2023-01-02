@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from articles.models import Article
 from store.models import Product
+from users.models import User
 
 
 class HomeProductListSerializer(serializers.ModelSerializer):
@@ -20,3 +21,13 @@ class HomeArticleListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = ('pk', 'title', 'category', 'image')
+
+
+class AboutBusterListSerializer(serializers.ModelSerializer):
+    """Список лучших бустеров"""
+
+    mailbox = serializers.SlugRelatedField(slug_field='title', read_only=True)
+
+    class Meta:
+        model = User
+        fields = ('mailbox', 'avatar')
