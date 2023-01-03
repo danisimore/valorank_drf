@@ -9,10 +9,12 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+
 import os
 from datetime import timedelta
 from pathlib import Path
 import dotenv
+from django.utils.module_loading import import_string
 
 dotenv.load_dotenv('.env.dev.db')
 dotenv.load_dotenv('.env.email.cfg')
@@ -94,7 +96,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -210,9 +212,55 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
+
+class ObjDict(dict):
+    def __getattribute__(self, item):
+        try:
+            val = self[item]
+            if isinstance(val, str):
+                val = import_string(val)
+            elif isinstance(val, (list, tuple)):
+                val = [import_string(v) if isinstance(v, str) else v for v in val]
+            self[item] = val
+        except KeyError:
+            val = super(ObjDict, self).__getattribute__(item)
+
+        return val
+
+
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'auth/users/reset_password_confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': 'auth/users/reset_email_confirm/{uid}/{token}',
+    'NEW_EMAIL_CONFIRM_URL': 'auth/users/new_email_confirm/{uid}/{token}',
+    'EMAIL': ObjDict(
+        {
+            "activation": "djoser.email.ActivationEmail",
+            "confirmation": "djoser.email.ConfirmationEmail",
+            "password_reset": "djoser.email.PasswordResetEmail",
+            "password_changed_confirmation": "djoser.email.PasswordChangedConfirmationEmail",
+            "username_changed_confirmation": "djoser.email.UsernameChangedConfirmationEmail",
+            "username_reset": "djoser.email.UsernameResetEmail",
+            "new_email_confirm": "users.email.NewEmailVerify"
+        }
+    ),
+    "PERMISSIONS": ObjDict(
+        {
+            "activation": ["rest_framework.permissions.AllowAny"],
+            "password_reset": ["rest_framework.permissions.AllowAny"],
+            "password_reset_confirm": ["rest_framework.permissions.AllowAny"],
+            "set_password": ["djoser.permissions.CurrentUserOrAdmin"],
+            "username_reset": ["rest_framework.permissions.IsAuthenticated"],
+            "username_reset_confirm": ["rest_framework.permissions.IsAuthenticated"],
+            "set_username": ["djoser.permissions.CurrentUserOrAdmin"],
+            "user_create": ["rest_framework.permissions.AllowAny"],
+            "user_delete": ["djoser.permissions.CurrentUserOrAdmin"],
+            "user": ["djoser.permissions.CurrentUserOrAdmin"],
+            "user_list": ["djoser.permissions.CurrentUserOrAdmin"],
+            "token_create": ["rest_framework.permissions.AllowAny"],
+            "token_destroy": ["rest_framework.permissions.IsAuthenticated"],
+            "new_username_confirm": ["rest_framework.permissions.IsAuthenticated"],
+        }
+    ),
     'DOMAIN': 'localhost:8000',
     'SITE_NAME': 'net',
     'LOGIN_FIELD': 'email',

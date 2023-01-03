@@ -11,6 +11,8 @@ from django.contrib.auth import authenticate
 from .email import ActivationEmail
 from .models import User
 
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 
 class TokenObtainSerializer(RestTokenObtainSerializer):
     """
@@ -37,12 +39,18 @@ class TokenObtainSerializer(RestTokenObtainSerializer):
 
         self.user = authenticate(**authenticate_kwargs)
 
-        # Пользователь, который пытается авторизоваться
-        user_data = User.objects.all().filter(email=dict(attrs)['email'])
-        # Объект класса User
-        user_obj = User.objects.get(email=dict(attrs)['email'])
-        # Объект класса отправки письма
-        re_send_email = ActivationEmail(pk=user_obj.pk, user=user_obj)
+        if User.objects.all().filter(email=dict(attrs)['email']):
+            # Пользователь, который пытается авторизоваться
+            user_data = User.objects.all().filter(email=dict(attrs)['email'])
+            # Объект класса User
+            user_obj = User.objects.get(email=dict(attrs)['email'])
+            # Объект класса отправки письма
+            re_send_email = ActivationEmail(pk=user_obj.pk, user=user_obj)
+        else:
+            raise exceptions.AuthenticationFailed(
+                self.error_messages['no_active_account'],
+                'no_active_account',
+            )
 
         if user_data.filter(is_active=False):
             # Если email не подтвержден, то отправляем письмо и вызываем исключение

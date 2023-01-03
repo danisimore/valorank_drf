@@ -15,7 +15,7 @@ urlpatterns = [
 
     path('api-auth/', include('rest_framework.urls')),
 
-    path('auth/', include('djoser.urls')),
+    path('auth/', include('users.urls')),
     path('auth/', include('djoser.urls.jwt')),
 
     path('api/token/', TokenObtainPairView.as_view()),
