@@ -1,8 +1,14 @@
-from django.urls import path
+from django.urls import path, include
 
-from .views import ProductListView, ProductDetailView
+from rest_framework import routers
 
-urlpatterns = [
-    path('products/all/', ProductListView.as_view()),
-    path('product/detail/<int:pk>/', ProductDetailView.as_view())
-]
+from . import views
+
+
+router = routers.SimpleRouter()
+
+router.register(r'products', views.ProductViewSet)
+router.register(r'base_ranks', views.BaseRankViewSet)
+router.register(r'desired_ranks', views.DesiredRankViewSet)
+
+urlpatterns = router.urls

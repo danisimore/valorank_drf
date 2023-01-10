@@ -1,24 +1,26 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
-from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.viewsets import ModelViewSet
+from rest_framework import permissions
 
-from .models import Product
+from .models import (
+    Product,
+    BaseRank,
+    DesiredRank
+)
+
 from . import serializers
-from .service import ProductFilter
-
-all_products = Product.objects.all()
+from articles.views import ArticleViewSet  # Для того чтобы не переопределять get_permissions
 
 
-class ProductListView(ListAPIView):
-    """Вывод всех товаров"""
-
-    queryset = all_products
-    serializer_class = serializers.ProductListSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = ProductFilter
+class ProductViewSet(ArticleViewSet):
+    queryset = Product.objects.all()
+    serializer_class = serializers.ProductSerializer
 
 
-class ProductDetailView(RetrieveAPIView):
-    """Вывод определенного товара"""
+class BaseRankViewSet(ArticleViewSet):
+    queryset = BaseRank.objects.all()
+    serializer_class = serializers.BaseRankSerializer
 
-    queryset = all_products
-    serializer_class = serializers.ProductDetailSerializer
+
+class DesiredRankViewSet(ProductViewSet):
+    queryset = DesiredRank.objects.all()
+    serializer_class = serializers.DesiredRankSerializer
