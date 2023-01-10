@@ -10,6 +10,4 @@ router = routers.SimpleRouter()
 router.register(r'data', views.ArticleViewSet)
 router.register(r'categories', views.ArticleCategoryViewSet)
 
-urlpatterns = [
-    path('', include(router.urls)),
-]
+urlpatterns = router.urls

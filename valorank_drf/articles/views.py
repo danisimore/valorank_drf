@@ -19,15 +19,7 @@ class ArticleViewSet(ModelViewSet):
     serializer_class = serializers.ArticleSerializer
 
 
-class ArticleCategoryViewSet(ModelViewSet):
-
-    def get_permissions(self):
-        if self.action == 'list' or self.action == 'retrieve':
-            self.permission_classes = [permissions.AllowAny]
-        else:
-            self.permission_classes = [permissions.IsAdminUser]
-
-        return super().get_permissions()
+class ArticleCategoryViewSet(ArticleViewSet):
 
     queryset = ArticleCategory.objects.all()
     serializer_class = serializers.ArticleCategorySerializer
