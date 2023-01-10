@@ -1,36 +1,19 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView, DestroyAPIView
-from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
 
 from . import serializers
-from .service import ArticleFilter
-from .models import Article, ArticleCategory
+from .models import Article
 
 
-class ArticleListView(ListAPIView):
-    """Вывод всех статей"""
+class ArticleViewSet(ModelViewSet):
 
-    queryset = Article.objects.all()
-    serializer_class = serializers.ArticleListSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = ArticleFilter
+    def get_permissions(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            self.permission_classes = [permissions.AllowAny]
+        else:
+            self.permission_classes = [permissions.IsAdminUser]
 
-
-class ArticleDetailView(RetrieveAPIView):
-    """Вывод определенной статьи"""
+        return super().get_permissions()
 
     queryset = Article.objects.all()
-    serializer_class = serializers.ArticleDetailSerializer
-
-
-class ArticleDestroyView(DestroyAPIView):
-    """Удаление статьи"""
-    queryset = Article.objects.all()
-    permission_classes = [permissions.IsAdminUser]
-
-
-class ArticleCategoryListView(ListAPIView):
-    """Вывод категорий"""
-
-    queryset = ArticleCategory.objects.all()
-    serializer_class = serializers.ArticleCategoryListSerializer
+    serializer_class = serializers.ArticleSerializer

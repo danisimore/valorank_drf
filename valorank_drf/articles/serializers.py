@@ -3,29 +3,10 @@ from rest_framework import serializers
 from .models import Article, ArticleCategory
 
 
-class ArticleListSerializer(serializers.ModelSerializer):
-    """Список всех статей"""
+class ArticleSerializer(serializers.ModelSerializer):
 
-    category = serializers.SlugRelatedField(slug_field='title', read_only=True)
-
-    class Meta:
-        model = Article
-        fields = ('id', 'title', 'category', 'image')
-
-
-class ArticleDetailSerializer(serializers.ModelSerializer):
-    """Определенная статья"""
-
-    category = serializers.SlugRelatedField(slug_field='title', read_only=True)
+    category = serializers.SlugRelatedField(slug_field='title', queryset=ArticleCategory.objects.all())
 
     class Meta:
         model = Article
-        fields = '__all__'
-
-
-class ArticleCategoryListSerializer(serializers.ModelSerializer):
-    """Список категорий"""
-
-    class Meta:
-        model = ArticleCategory
         fields = '__all__'

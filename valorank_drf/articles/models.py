@@ -4,12 +4,8 @@ from django.db import models
 
 
 class ArticleCategory(models.Model):
-    """
-    :css: Необходим для отображения фона категории статьи. Может быть bg-danger или bg-info.
-    """
 
     title = models.CharField(max_length=128, verbose_name='Название')
-    css = models.CharField(max_length=128, verbose_name='CSS-класс', default='bg-danger')
 
     def __str__(self):
         return self.title
@@ -27,7 +23,7 @@ class Article(models.Model):
     """
     title = models.CharField(max_length=256, verbose_name='Название')
     content = models.TextField(verbose_name='Текст статьи')
-    image = models.ImageField(upload_to='articles', verbose_name='Изображение')
+    image = models.ImageField(upload_to='articles', blank=True, verbose_name='Изображение')
     video = models.CharField(max_length=500, blank=True, verbose_name='Видео')
     category = models.ForeignKey(ArticleCategory, on_delete=models.CASCADE, blank=True, null=True)
     is_update = models.BooleanField(default=False)
