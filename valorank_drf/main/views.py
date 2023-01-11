@@ -8,21 +8,21 @@ from . import serializers
 
 
 class HomeProductListView(ListAPIView):
-    """Вывод товаров с главной страницы"""
+    """Products from the main page"""
 
     queryset = Product.objects.filter(is_bestseller=True)[:3]
     serializer_class = serializers.HomeProductListSerializer
 
 
 class HomeArticleListView(ListAPIView):
-    """Вывод статей с главной страницы"""
+    """Articles from the home page"""
 
     queryset = Article.objects.all().order_by('-pk')[:5]
     serializer_class = serializers.HomeArticleListSerializer
 
 
 class BusterListView(ListAPIView):
-    """Вывод лучших бустеров"""
+    """The best boosters"""
 
     queryset = User.objects.filter(is_best=True)
     serializer_class = serializers.AboutBusterListSerializer

@@ -2,11 +2,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 
-from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
+from rest_framework_swagger.views import get_swagger_view
 
-from users.views import TokenObtainPairView
+from . import settings
 
-from config import settings
+
+schema_view = get_swagger_view(title='Valorank API')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,16 +17,14 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
 
     path('auth/', include('users.urls')),
-    path('auth/', include('djoser.urls.jwt')),
-
-    path('api/token/', TokenObtainPairView.as_view()),
-    path('api/token/refresh/', TokenRefreshView.as_view()),
-    path('api/token/verify/', TokenVerifyView.as_view()),
+    path('auth/', include('config.jwt')),
 
     path('api/v1/main/', include('main.urls')),
     path('api/v1/store/', include('store.urls')),
     path('api/v1/articles/', include('articles.urls')),
     path('api/v1/support_service/', include('support_service.urls')),
+
+    path('swagger/', schema_view)
 ]
 
 if settings.DEBUG:

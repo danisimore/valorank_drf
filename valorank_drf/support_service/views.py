@@ -4,7 +4,7 @@ from .serializers import SupportServiceRequestSerializer
 
 
 class SupportServiceRequestView(CreateAPIView):
-    """Отправка заявки в службу поддержки"""
+    """Sending a request to the support service"""
 
     serializer_class = SupportServiceRequestSerializer
 

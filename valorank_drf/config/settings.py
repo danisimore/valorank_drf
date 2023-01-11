@@ -70,6 +70,7 @@ THIRD_PARTY = [
     'ckeditor_uploader',
     'django_filters',
     'djoser',
+    'rest_framework_swagger',
 ]
 
 LOCAL_APPS = [
@@ -105,6 +106,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries': {
+                'staticfiles': 'django.templatetags.static',
+            }
         },
     },
 ]
@@ -175,6 +179,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
@@ -249,8 +254,8 @@ DJOSER = {
             "password_reset": ["rest_framework.permissions.AllowAny"],
             "password_reset_confirm": ["rest_framework.permissions.AllowAny"],
             "set_password": ["djoser.permissions.CurrentUserOrAdmin"],
-            "username_reset": ["rest_framework.permissions.IsAuthenticated"],
-            "username_reset_confirm": ["rest_framework.permissions.IsAuthenticated"],
+            "username_reset": ["rest_framework.permissions.AllowAny"],
+            "username_reset_confirm": ["rest_framework.permissions.AllowAny"],
             "set_username": ["djoser.permissions.CurrentUserOrAdmin"],
             "user_create": ["rest_framework.permissions.AllowAny"],
             "user_delete": ["djoser.permissions.CurrentUserOrAdmin"],
@@ -258,14 +263,14 @@ DJOSER = {
             "user_list": ["djoser.permissions.CurrentUserOrAdmin"],
             "token_create": ["rest_framework.permissions.AllowAny"],
             "token_destroy": ["rest_framework.permissions.IsAuthenticated"],
-            "new_username_confirm": ["rest_framework.permissions.IsAuthenticated"],
+            "new_username_confirm": ["rest_framework.permissions.AllowAny"],
         }
     ),
     'DOMAIN': 'localhost:8000',
     'SITE_NAME': 'net',
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
-    'ACTIVATION_URL': '/users/activate/{uid}/{token}',
+    'ACTIVATION_URL': '/users/activation/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
         'activation': 'djoser.serializers.ActivationSerializer',
@@ -273,3 +278,6 @@ DJOSER = {
 }
 
 SITE_ID = 1
+
+LOGIN_URL = 'rest_framework:login'
+LOGOUT_URL = 'rest_framework:logout'

@@ -6,7 +6,7 @@ from .models import Article, ArticleCategory
 
 
 class ArticleViewSet(ModelViewSet):
-
+    """Articles"""
     def get_permissions(self):
         if self.action == 'list' or self.action == 'retrieve':
             self.permission_classes = [permissions.AllowAny]
@@ -20,6 +20,6 @@ class ArticleViewSet(ModelViewSet):
 
 
 class ArticleCategoryViewSet(ArticleViewSet):
-
+    """Categories of articles"""
     queryset = ArticleCategory.objects.all()
     serializer_class = serializers.ArticleCategorySerializer
