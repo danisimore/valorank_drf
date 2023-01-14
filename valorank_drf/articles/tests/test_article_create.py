@@ -1,9 +1,9 @@
 from rest_framework import status
 
-from . import base
+from . import setup
 
 
-class ArticleCreateTest(base.ArticleTests):
+class ArticleCreateTest(setup.ArticleTests):
 
     def test_create_by_an_unauthorized_user(self):
         response = self.client.post('/api/v1/articles/data/', self.data)

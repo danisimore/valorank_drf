@@ -1,9 +1,9 @@
 from rest_framework import status
 
-from . import base
+from . import setup
 
 
-class ArticleDeleteTest(base.ArticleTests):
+class ArticleDeleteTest(setup.ArticleTests):
 
     def test_delete_by_an_unauthorized_user(self):
         response = self.client.delete('/api/v1/articles/data/', self.data)

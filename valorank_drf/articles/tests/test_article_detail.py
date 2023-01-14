@@ -1,9 +1,9 @@
 from rest_framework import status
 
-from . import base
+from . import setup
 
 
-class ArticleDetailTest(base.ArticleTests):
+class ArticleDetailTest(setup.ArticleTests):
 
     def test_article_detail(self):
         response = self.client.get(f'/api/v1/articles/data/{self.lonely_article.pk}/')

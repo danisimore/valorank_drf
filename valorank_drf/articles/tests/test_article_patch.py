@@ -1,9 +1,9 @@
 from rest_framework import status
 
-from . import base
+from . import setup
 
 
-class ArticlePatchTest(base.ArticleTests):
+class ArticlePatchTest(setup.ArticleTests):
 
     def test_patch_by_an_unauthorized_user(self):
         response = self.client.patch('/api/v1/articles/data/', self.data)
