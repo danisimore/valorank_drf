@@ -270,7 +270,7 @@ DJOSER = {
     'SITE_NAME': 'net',
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
-    'ACTIVATION_URL': '/users/activation/{uid}/{token}',
+    'ACTIVATION_URL': 'auth/users/activation/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
         'activation': 'djoser.serializers.ActivationSerializer',
