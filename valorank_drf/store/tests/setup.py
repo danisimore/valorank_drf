@@ -16,8 +16,8 @@ class StoreSetUp(APITestCase):
         file_mock.name = 'test.jpg'  # Файл должен физически существовать (в media)
 
         # Создаем ранги для товаров
-        test_base_rank = models.BaseRank.objects.create(title='Test Base Rank')
-        test_desired_rank = models.DesiredRank.objects.create(title='Test Desired Rank')
+        self.test_base_rank = models.BaseRank.objects.create(title='Test Base Rank')
+        self.test_desired_rank = models.DesiredRank.objects.create(title='Test Desired Rank')
 
         # Создаем суперпользователя
         self.super_user = User.objects.create_superuser('super@user.tst', 'Password!123')
@@ -35,8 +35,8 @@ class StoreSetUp(APITestCase):
 
         self.test_product = models.Product.objects.create(
             title='Test Product',
-            base_rank=test_base_rank,
-            desired_rank=test_desired_rank,
+            base_rank=self.test_base_rank,
+            desired_rank=self.test_desired_rank,
             discount=False,
             old_price=None,
             current_price=300,
@@ -47,8 +47,8 @@ class StoreSetUp(APITestCase):
 
         self.data = {
             'title': 'Test Product',
-            'base_rank': test_base_rank,
-            'desired_rank': test_desired_rank,
+            'base_rank': self.test_base_rank,
+            'desired_rank': self.test_desired_rank,
             'discount': False,
             'old_price': 0,
             'current_price': 300,

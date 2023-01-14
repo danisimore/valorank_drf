@@ -1,6 +1,6 @@
 from rest_framework import status
 
-from .setup import StoreSetUp
+from store.tests.setup import StoreSetUp
 
 
 class TestProductList(StoreSetUp):

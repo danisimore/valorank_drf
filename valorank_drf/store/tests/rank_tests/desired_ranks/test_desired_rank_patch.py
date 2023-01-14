@@ -1,22 +1,22 @@
 from rest_framework import status
 
-from .setup import StoreSetUp
+from store.tests.setup import StoreSetUp
 
 
-class TestProductCreate(StoreSetUp):
+class TestBaseRankPatch(StoreSetUp):
 
-    def test_create_by_an_unauthorized_user(self):
-        response = self.client.post('/api/v1/store/products/', self.data)
+    def test_patch_by_an_unauthorized_user(self):
+        response = self.client.patch('/api/v1/store/desired_ranks/', self.data)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    def test_create_by_a_non_superuser(self):
+    def test_patch_by_a_non_superuser(self):
         jwt_token = self.client.post('/auth/jwt/create/', {'email': 'simple@user.tst', 'password': 'Password!123'})
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + jwt_token.data['access'])
-        response = self.client.post('/api/v1/store/products/', self.data)
+        response = self.client.patch(f'/api/v1/store/desired_ranks/{self.test_desired_rank.pk}/', self.data)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_create_by_superuser(self):
+    def test_patch_by_superuser(self):
         jwt_token = self.client.post('/auth/jwt/create/', {'email': 'super@user.tst', 'password': 'Password!123'})
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + jwt_token.data['access'])
-        response = self.client.post('/api/v1/store/products/', self.data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response = self.client.patch(f'/api/v1/store/desired_ranks/{self.test_desired_rank.pk}/', self.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

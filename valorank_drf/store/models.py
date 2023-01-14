@@ -32,8 +32,8 @@ class Product(models.Model):
     """
 
     title = models.CharField(max_length=256, verbose_name='Название')
-    base_rank = models.ForeignKey(BaseRank, on_delete=models.PROTECT)
-    desired_rank = models.ForeignKey(DesiredRank, on_delete=models.PROTECT)
+    base_rank = models.ForeignKey(BaseRank, on_delete=models.SET_NULL, null=True)
+    desired_rank = models.ForeignKey(DesiredRank, on_delete=models.SET_NULL, null=True)
     discount = models.BooleanField(verbose_name='Товар со скидкой', blank=True, default=False)
     old_price = models.IntegerField(verbose_name='Старая цена', blank=True, null=True)
     current_price = models.IntegerField(verbose_name='Текущая цена')
