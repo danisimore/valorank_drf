@@ -1,7 +1,9 @@
-from django.urls import path
+from rest_framework import routers
+from .views import SupportServiceViewSet
 
-from .views import SupportServiceRequestView
+router = routers.SimpleRouter()
 
-urlpatterns = [
-    path('request/', SupportServiceRequestView.as_view())
-]
+router.register(r'request', SupportServiceViewSet)
+
+urlpatterns = router.urls
+
