@@ -1,10 +1,8 @@
 import mock
 
 from rest_framework.test import APITestCase
-from rest_framework import status
 
 from django.core.files import File
-from django.urls import reverse
 
 from articles.models import Article, ArticleCategory
 from store import models

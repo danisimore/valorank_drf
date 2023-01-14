@@ -26,6 +26,7 @@ class ArticleTests(APITestCase):
         self.super_user.save()
 
         self.simple_user = User.objects.create_user('simple@user.tst', 'Password!123')
+        self.simple_user.save()
 
         image = io.BytesIO()
         Image.new('RGB', (640, 640)).save(image, 'JPEG')
