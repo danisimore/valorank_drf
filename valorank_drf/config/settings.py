@@ -19,9 +19,14 @@ from django.utils.module_loading import import_string
 dotenv.load_dotenv('.env.dev.db')
 dotenv.load_dotenv('.env.email.cfg')
 dotenv.load_dotenv('.env.dev')
+dotenv.load_dotenv('.env.prod')
+dotenv.load_dotenv('.env.prod.db')
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# For dev version
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# For dev version
+# BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -161,9 +166,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [STATIC_DIR]
+# For dev version
+# STATIC_URL = 'static/'
+# STATIC_DIR = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = [STATIC_DIR]
+
+# For prod version
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static/'),
+]
+STATIC_URL = '/staticfiles/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -8,10 +8,7 @@ then
     sleep 0.1
     done
 
-    echo 'PostgreSQL started'
+    echo 'PostgreSQL stated'
 fi
-
-python manage.py flush --no-input
-python manage.py migrate
 
 exec "$@"
