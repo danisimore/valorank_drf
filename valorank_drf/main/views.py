@@ -10,19 +10,30 @@ from . import serializers
 class HomeProductListView(ListAPIView):
     """Products from the main page"""
 
-    queryset = Product.objects.filter(is_bestseller=True)[:3]
+    queryset = Product.objects.filter(is_bestseller=True)[:3].only(
+        'title',
+        'current_price',
+        'image'
+    )
     serializer_class = serializers.HomeProductListSerializer
 
 
 class HomeArticleListView(ListAPIView):
     """Articles from the home page"""
 
-    queryset = Article.objects.all().order_by('-pk')[:5]
+    queryset = Article.objects.all().order_by('-pk')[:5].prefetch_related('category').only(
+        'title',
+        'category',
+        'image'
+    )
     serializer_class = serializers.HomeArticleListSerializer
 
 
 class BusterListView(ListAPIView):
     """The best boosters"""
 
-    queryset = User.objects.filter(is_best=True)
+    queryset = User.objects.filter(is_best=True).prefetch_related('mailbox').only(
+        'avatar',
+        'mailbox'
+    )
     serializer_class = serializers.AboutBusterListSerializer

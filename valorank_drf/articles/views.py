@@ -15,7 +15,7 @@ class ArticleViewSet(ModelViewSet):
 
         return super().get_permissions()
 
-    queryset = Article.objects.all()
+    queryset = Article.objects.all().prefetch_related('category')
     serializer_class = serializers.ArticleSerializer
 
 

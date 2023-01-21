@@ -13,7 +13,7 @@ from articles.views import ArticleViewSet  # Для того чтобы не п�
 
 class ProductViewSet(ArticleViewSet):
     """Products"""
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().prefetch_related('base_rank', 'desired_rank')
     serializer_class = serializers.ProductSerializer
 
 
