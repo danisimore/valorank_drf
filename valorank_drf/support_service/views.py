@@ -2,7 +2,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
 
 from .serializers import SupportServiceRequestSerializer
-from .models import Request
+from .services import get_requests
 
 
 class SupportServiceViewSet(ModelViewSet):
@@ -13,7 +13,7 @@ class SupportServiceViewSet(ModelViewSet):
             self.permission_classes = [permissions.IsAdminUser]
         return super().get_permissions()
 
-    queryset = Request.objects.all()
+    queryset = get_requests()
     serializer_class = SupportServiceRequestSerializer
 
 

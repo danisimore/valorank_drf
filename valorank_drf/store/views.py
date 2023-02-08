@@ -1,29 +1,22 @@
-from rest_framework.viewsets import ModelViewSet
-from rest_framework import permissions
-
-from .models import (
-    Product,
-    BaseRank,
-    DesiredRank
-)
+from articles.views import ArticleViewSet  # Для того чтобы не переопределять get_permissions
 
 from . import serializers
-from articles.views import ArticleViewSet  # Для того чтобы не переопределять get_permissions
+from .services import get_all_products, get_base_ranks, get_desired_ranks
 
 
 class ProductViewSet(ArticleViewSet):
     """Products"""
-    queryset = Product.objects.all().prefetch_related('base_rank', 'desired_rank')
+    queryset = get_all_products()
     serializer_class = serializers.ProductSerializer
 
 
 class BaseRankViewSet(ArticleViewSet):
     """User rank"""
-    queryset = BaseRank.objects.all()
+    queryset = get_base_ranks()
     serializer_class = serializers.BaseRankSerializer
 
 
 class DesiredRankViewSet(ProductViewSet):
     """Rank to which a boost is needed"""
-    queryset = DesiredRank.objects.all()
+    queryset = get_desired_ranks()
     serializer_class = serializers.DesiredRankSerializer
